@@ -107,7 +107,7 @@ Gun.shootInfinity(111, new TailTag().put("mykey","message di infinty."));
 //And pull it anywhere, anytime!
 Bullet bullet = Gun.pull(111, null);
 String message = bullet.getTailTag().get("mykey").toString();
-//the message of infinty!!!
+//the message of infinity!!!
 ```
 Amazed so far? Wanna go deeper?? Well, the wiki is yours!
 
