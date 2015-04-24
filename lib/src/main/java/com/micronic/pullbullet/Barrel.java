@@ -1,3 +1,19 @@
+/*
+ * Copyright (C) 2015 Vallabh Shevate
+ *
+ *    Licensed under the Apache License, Version 2.0 (the "License");
+ *    you may not use this file except in compliance with the License.
+ *    You may obtain a copy of the License at
+ *
+ *        http://www.apache.org/licenses/LICENSE-2.0
+ *
+ *    Unless required by applicable law or agreed to in writing, software
+ *    distributed under the License is distributed on an "AS IS" BASIS,
+ *    WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ *    See the License for the specific language governing permissions and
+ *    limitations under the License.
+ */
+
 package com.micronic.pullbullet;
 
 import android.util.Log;
@@ -34,8 +50,8 @@ public abstract class Barrel {
             return new ConcurrentLinkedQueue<Timer>();
         }
     };
-    protected TailTag last;
-    protected boolean shattered = false;
+    protected volatile TailTag last;
+    protected volatile boolean shattered = false;
 
     protected void checkNull(Object obj, String msg) {
         if (obj == null)
@@ -113,7 +129,7 @@ public abstract class Barrel {
         return sticks.get(serial);
     }
 
-    private void postAll() {
+    private synchronized void postAll() {
         if (isDispatching.get()) {
             return;
         }
@@ -169,7 +185,7 @@ public abstract class Barrel {
         return handlers.keySet().toArray(new Integer[handlers.keySet().size()]);
     }
 
-    protected void shoot(int serial, TailTag tailTag, boolean bounceIfMissed) {
+    protected synchronized void shoot(int serial, TailTag tailTag, boolean bounceIfMissed) {
         boolean dispatched = false;
         Set<Magnett> magnets = handlers.get(serial);
         if (magnets != null && !magnets.isEmpty()) {
@@ -190,8 +206,10 @@ public abstract class Barrel {
             }
         }
         String serialKey = "serial";
-        if (!dispatched && serial != -1 && bounceIfMissed)
-            shoot(-1, new TailTag().put(serialKey, serial), false);
+        if (!dispatched && serial != -1 && bounceIfMissed) {
+            TailTag tout = tailTag == null ? new TailTag() : tailTag;
+            shoot(-1, tout.put(serialKey, serial), false);
+        }
         postAll();
     }
 
