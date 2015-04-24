@@ -26,10 +26,12 @@ Gun.shoot(bullet);
 //And now in your service
 
 Gun.pull(911,new Magnet(){
+
+    @Override
 	public void onStuck(Bullet bullet){
 	String message=bullet.getTailTag().get("mykey").toString();
 	Toast.makeText(this,message,Toast.LENGTH_LONG).show();
-}
+    }
 }
 ```
 Amazing! Isn't it?
