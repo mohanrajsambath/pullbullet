@@ -109,7 +109,7 @@ Bullet bullet = Gun.pull(111, null);
 String message = bullet.getTailTag().get("mykey").toString();
 //the message is of infinty!!!
 ```
-Amazed so far? Wanna go deeper??? Well, the wiki is yours!
+Amazed so far? Wanna go deeper?? Well, the wiki is yours!
 
 License
 =======
