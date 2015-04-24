@@ -95,7 +95,7 @@ There is one more type of bullet called as bullet di infinity. Remember, a magne
 
 When all the magnets have released a bullet and there are no more magnets left on its path, a bullet hits its target ! In case it was fired from a gun, it bounces back with a serial of -1. This is an only power bullet of the gun. Again, if there are magnets listening for serial -1 on the return path, the bullet takes a rest at each magnet and finally it comes back to the gun! But in case of a rifle, the bullet won't bounce back. It is destroyed the moment it hits the target. 
 
-But what does this all have to do with bullet di infinity? You might be wondering. Well, it has no target!! It travels infinity!!!
+But what does this all have to do with bullet di infinity? You might be wondering. And you are right! It has no target!! It travels infinity!!!
 
 Bullet di infinity
 -----------------    
