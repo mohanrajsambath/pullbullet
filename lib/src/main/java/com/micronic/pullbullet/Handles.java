@@ -213,7 +213,7 @@ public class Handles {
                 if (in.hasExtra(Intent.EXTRA_DATA_REMOVED))
                     tag.put("dataRemoved", in.getBooleanExtra(
                             Intent.EXTRA_DATA_REMOVED, false));
-                if (ser == -11) {
+                if (ser == -12) {
                     String[] names = in
                             .getStringArrayExtra(Intent.EXTRA_CHANGED_COMPONENT_NAME_LIST);
                     if (names == null)
