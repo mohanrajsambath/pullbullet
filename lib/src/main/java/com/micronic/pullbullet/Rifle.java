@@ -371,7 +371,7 @@ public class Rifle extends Barrel {
         count = 0;
     }
 
-    public synchronized void releaseAllFor(int serial) {
+    public synchronized void releaseAll(int serial) {
         Intent st = sticks.get(serial);
         if (st != null) {
             context.removeStickyBroadcast(st);
