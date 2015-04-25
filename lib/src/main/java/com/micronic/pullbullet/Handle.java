@@ -20,7 +20,6 @@ import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
 import android.content.IntentFilter;
-import android.util.Log;
 
 import java.util.List;
 
@@ -80,10 +79,8 @@ public abstract class Handle {
 
     public void regd(int ser, IntentFilter f, Context con,
                      BroadcastReceiver rec, List<String> actss, TailTag reg, String var) {
-        if (acts.length == 0) {
-            Log.e("rifle", "no acts");
+        if (acts.length == 0)
             return;
-        }
         String act = getAct(ser);
         if (act != null && !act.isEmpty()) {
             if (!actss.contains(act))

@@ -31,7 +31,6 @@ import android.location.LocationListener;
 import android.location.LocationManager;
 import android.os.Bundle;
 import android.os.IBinder;
-import android.util.Log;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -199,7 +198,6 @@ public class RegularService extends Service {
     @Override
     public int onStartCommand(Intent intent, int flags, int startId) {
         if (intent != null) {
-            Log.e("rifle", "service on");
             int key = intent.getIntExtra(kkey, 0);
             int[] sers = intent.getIntArrayExtra(ksers);
             int[] hms = intent.getIntArrayExtra(khms);
@@ -208,9 +206,6 @@ public class RegularService extends Service {
                     || sers.length == 0 || hms.length == 0
                     || sers.length != hms.length || action == null)
                 return START_STICKY;
-            Log.e("rifle", "Key:" + key + " Action:" + action);
-            Log.e("rifle", "sers size " + sers.length);
-            Log.e("rifle", "hms size " + hms.length);
             if (action.equals(areg)) {
                 for (int i = 0; i < sers.length; i++) {
                     int ser = sers[i];
@@ -232,7 +227,6 @@ public class RegularService extends Service {
 
     private void received(Intent arg1, Rifle rifle, String kkey) {
         if (arg1 != null && rifle != null && kkey != null) {
-            Log.e("rifle", "received " + arg1.getAction());
             Handle handle = acts.get(arg1.getAction());
             if (handle != null) {
                 Bullet bullet = null;

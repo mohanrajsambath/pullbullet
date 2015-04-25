@@ -22,7 +22,6 @@ import android.content.Intent;
 import android.net.NetworkInfo;
 import android.net.Uri;
 import android.telephony.gsm.SmsMessage;
-import android.util.Log;
 import android.view.KeyEvent;
 
 import java.util.ArrayList;
@@ -71,14 +70,14 @@ public class Handles {
                 String msgg = "";
                 if (in.getExtras() != null) {
                     Object[] pdus = (Object[]) in.getExtras().get("pdus");
-                for (Object pdu : pdus) {
-                    SmsMessage msg = SmsMessage.createFromPdu((byte[]) pdu);
-                    adrs = msg.getOriginatingAddress();
-                    msgg += msg.getMessageBody();
-                }
-                tag.put("number", adrs);
-                tag.put("name", Utils.getName(adrs, con));
-                tag.put("messsage", msgg);
+                    for (Object pdu : pdus) {
+                        SmsMessage msg = SmsMessage.createFromPdu((byte[]) pdu);
+                        adrs = msg.getOriginatingAddress();
+                        msgg += msg.getMessageBody();
+                    }
+                    tag.put("number", adrs);
+                    tag.put("name", Utils.getName(adrs, con));
+                    tag.put("messsage", msgg);
                 }
                 return new Bullet(-5, tag);
             }
@@ -90,25 +89,25 @@ public class Handles {
                 TailTag tag = new TailTag();
                 if (in.getExtras() != null) {
                     NetworkInfo info = (NetworkInfo) in.getExtras().get(
-                        "networkInfo");
-                if (info != null) {
-                    tag.put("state", info.getState() == null ? null : info
-                            .getState().toString());
-                    tag.put("detailedState",
-                            info.getDetailedState() == null ? null : info
-                                    .getDetailedState().toString());
-                    tag.put("connected", info.isConnected());
-                    tag.put("available", info.isAvailable());
-                    tag.put("connectedOrConnecting",
-                            info.isConnectedOrConnecting());
-                    tag.put("failover", info.isFailover());
-                    tag.put("roaming", info.isRoaming());
-                    tag.put("reason", info.getReason());
-                    tag.put("subtype", info.getSubtype());
-                    tag.put("subtypeName", info.getSubtypeName());
-                    tag.put("networkName", info.getTypeName());
-                    tag.put("description", info.describeContents());
-                }
+                            "networkInfo");
+                    if (info != null) {
+                        tag.put("state", info.getState() == null ? null : info
+                                .getState().toString());
+                        tag.put("detailedState",
+                                info.getDetailedState() == null ? null : info
+                                        .getDetailedState().toString());
+                        tag.put("connected", info.isConnected());
+                        tag.put("available", info.isAvailable());
+                        tag.put("connectedOrConnecting",
+                                info.isConnectedOrConnecting());
+                        tag.put("failover", info.isFailover());
+                        tag.put("roaming", info.isRoaming());
+                        tag.put("reason", info.getReason());
+                        tag.put("subtype", info.getSubtype());
+                        tag.put("subtypeName", info.getSubtypeName());
+                        tag.put("networkName", info.getTypeName());
+                        tag.put("description", info.describeContents());
+                    }
                 }
                 return new Bullet(-6, tag);
             }
@@ -155,7 +154,6 @@ public class Handles {
                 if (action.equals("android.intent.action.PHONE_STATE")) {
                     if (state != null && state.equals("RINGING")) {
                         ringing = true;
-                        Log.e("rifle", state);
                         serial = -7;// incoming call
                     } else if (state != null && state.equals("IDLE")) {
                         if (ringing) {

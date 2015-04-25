@@ -29,7 +29,6 @@ import android.location.LocationManager;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Looper;
-import android.util.Log;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -330,7 +329,6 @@ public class Rifle extends Barrel {
                 IntentFilter filter = new IntentFilter(iTag);
                 filter.setPriority(power);
                 context.registerReceiver(receiver, filter);
-                Log.e("rifle", "power " + power);
                 registered = true;
             } catch (Exception e) {
             }
