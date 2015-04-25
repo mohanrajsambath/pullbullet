@@ -18,7 +18,6 @@ package com.micronic.pullbullet;
 
 import android.annotation.SuppressLint;
 import android.os.CountDownTimer;
-import android.util.Log;
 
 import java.util.ArrayList;
 import java.util.Collections;
@@ -44,10 +43,8 @@ public class Timer {
     }
 
     private boolean decrement(Long val) {
-        Log.e("timer", "val to be decremented " + val);
         if (queue.isEmpty()) {
             dcr = 0;
-            Log.e("timer", "dcr failed");
             return false;
         }
         dcr += val;
@@ -57,7 +54,6 @@ public class Timer {
             if (tt < 0)
                 tt = 0L;
             queue.add(i, tt);
-            Log.e("timer", "tt:" + queue.get(i));
         }
         return true;
     }
@@ -89,20 +85,16 @@ public class Timer {
     }
 
     private void start() {
-        if (started) {
-        } else {
-            Log.e("timer", "started");
+        if (!started) {
             started = true;
             if (timer != null) {
                 timer.cancel();
                 timer = null;
             }
-            Log.e("timer", "started");
             timer = new CountDownTimer(queue.get(0), queue.get(0) / 10) {
 
                 @Override
                 public void onFinish() {
-                    Log.e("timer", "finished");
                     started = false;
                     try {
                         Long out = queue.remove(0);
@@ -124,13 +116,11 @@ public class Timer {
 
     public boolean stop() {
         if (started) {
-            Log.e("timer", "stopped");
             timer.cancel();
             timer = null;
             started = false;
             return true;
         }
-        Log.e("timer", "already stopped");
         return false;
     }
 

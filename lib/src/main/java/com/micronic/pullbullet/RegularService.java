@@ -56,7 +56,7 @@ public class RegularService extends Service {
     private final Shaker shaker = new Shaker(new Shaker.Listener() {
 
         @Override
-        public void hearShake() {
+        public void onShake() {
             Bullet bullet = new Bullet(-60, new TailTag().put(kkey, key));
             rifle.shoot(bullet);
         }

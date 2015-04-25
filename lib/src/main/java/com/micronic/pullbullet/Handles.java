@@ -69,7 +69,8 @@ public class Handles {
                 TailTag tag = new TailTag();
                 String adrs = "";
                 String msgg = "";
-                Object[] pdus = (Object[]) in.getExtras().get("pdus");
+                if (in.getExtras() != null) {
+                    Object[] pdus = (Object[]) in.getExtras().get("pdus");
                 for (Object pdu : pdus) {
                     SmsMessage msg = SmsMessage.createFromPdu((byte[]) pdu);
                     adrs = msg.getOriginatingAddress();
@@ -78,6 +79,7 @@ public class Handles {
                 tag.put("number", adrs);
                 tag.put("name", Utils.getName(adrs, con));
                 tag.put("messsage", msgg);
+                }
                 return new Bullet(-5, tag);
             }
         });
@@ -86,7 +88,8 @@ public class Handles {
             @Override
             public Bullet handle(Intent in, Context con, TailTag reg) {
                 TailTag tag = new TailTag();
-                NetworkInfo info = (NetworkInfo) in.getExtras().get(
+                if (in.getExtras() != null) {
+                    NetworkInfo info = (NetworkInfo) in.getExtras().get(
                         "networkInfo");
                 if (info != null) {
                     tag.put("state", info.getState() == null ? null : info
@@ -105,6 +108,7 @@ public class Handles {
                     tag.put("subtypeName", info.getSubtypeName());
                     tag.put("networkName", info.getTypeName());
                     tag.put("description", info.describeContents());
+                }
                 }
                 return new Bullet(-6, tag);
             }
@@ -143,16 +147,17 @@ public class Handles {
                 String no = in.getStringExtra("incoming_number");
                 String name = Utils.getName(no, con);
                 String state = in.getStringExtra("state");
+                String action = in.getAction() == null ? "" : in.getAction();
                 boolean ringing = reg.get("ringing").toBoolean();
                 boolean incall = reg.get("incall").toBoolean();
                 double inCallTime = reg.get("inCallTime").toDouble();
                 int serial = -7;
-                if (in.getAction().equals("android.intent.action.PHONE_STATE")) {
-                    if (state.equals("RINGING")) {
+                if (action.equals("android.intent.action.PHONE_STATE")) {
+                    if (state != null && state.equals("RINGING")) {
                         ringing = true;
                         Log.e("rifle", state);
                         serial = -7;// incoming call
-                    } else if (state.equals("IDLE")) {
+                    } else if (state != null && state.equals("IDLE")) {
                         if (ringing) {
                             ringing = false;
                             if (!incall) {
@@ -166,7 +171,7 @@ public class Handles {
                                 serial = -9;// call ended
                             }
                         }
-                    } else if (state.equals("OFFHOOK")) {
+                    } else if (state != null && state.equals("OFFHOOK")) {
                         if (ringing) {
                             incall = true;
                             inCallTime = System.currentTimeMillis();
@@ -255,8 +260,10 @@ public class Handles {
             @Override
             public Bullet handle(Intent in, Context con, TailTag reg) {
                 TailTag tag = new TailTag();
-                KeyEvent ev = (KeyEvent) in.getExtras().get(
-                        Intent.EXTRA_KEY_EVENT);
+                KeyEvent ev = null;
+                if (in.getExtras() != null)
+                    ev = (KeyEvent) in.getExtras().get(
+                            Intent.EXTRA_KEY_EVENT);
                 if (ev != null) {
                     tag.put("keyCode", ev.getKeyCode());
                 }

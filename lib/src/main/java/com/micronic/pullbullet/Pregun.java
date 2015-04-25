@@ -21,7 +21,7 @@ import android.os.Looper;
 
 import java.util.Set;
 
-public class Barel extends Barrel {
+public class Pregun extends Barrel {
     private final Handler handler = new Handler(Looper.getMainLooper());
     private final Timer.Listener ls = new Timer.Listener() {
 
@@ -36,6 +36,12 @@ public class Barel extends Barrel {
         }
     };
     public volatile int count = 0;
+
+    @Override
+    protected void clear() {
+        super.clear();
+        count = 0;
+    }
 
     @Override
     protected Timer getTimer(long timeout) {
@@ -62,13 +68,8 @@ public class Barel extends Barrel {
     }
 
     @Override
-    protected void shootInfinit(int serial, TailTag tailTag) {
-        checkNull(tailTag,
-                "A bullet di infinty cannot be shot with a null tailtag.");
+    protected void shootInfinity(int serial, TailTag tailTag) {
+        super.shootInfinity(serial, tailTag);
         count++;
-        TailTag tag = sticks.get(serial);
-        if (tag == null)
-            sticks.put(serial, tailTag);
-        shoot(serial, tailTag);
     }
 }

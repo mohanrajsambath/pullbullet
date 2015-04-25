@@ -28,12 +28,14 @@ public class RegularReceiver extends BroadcastReceiver {
         if (arg0 != null && arg1 != null) {
             String action = arg1.getAction();
             int ser = 0;
-            if (action.equals(Intent.ACTION_BOOT_COMPLETED))
-                ser = -51;
-            else if (action.equals(Intent.ACTION_SHUTDOWN))
-                ser = -52;
-            else if (action.equals(Intent.ACTION_MY_PACKAGE_REPLACED))
-                ser = -53;
+            if (action != null) {
+                if (action.equals(Intent.ACTION_BOOT_COMPLETED))
+                    ser = -51;
+                else if (action.equals(Intent.ACTION_SHUTDOWN))
+                    ser = -52;
+                else if (action.equals(Intent.ACTION_MY_PACKAGE_REPLACED))
+                    ser = -53;
+            }
             if (ser == 0)
                 return;
             String kkey = arg0.getPackageName() + ".pullbullet.service.key";

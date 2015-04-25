@@ -16,8 +16,6 @@
 
 package com.micronic.pullbullet;
 
-import android.util.Log;
-
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Comparator;
@@ -59,7 +57,6 @@ public abstract class Barrel {
     }
 
     private void addNewTimer(long timeout, Timer.Listener ls) {
-        Log.e("barrel", "new timer added");
         Timer timer = new Timer(ls);
         timer.queue(timeout);
         timers.get().add(timer);
@@ -97,6 +94,7 @@ public abstract class Barrel {
                 magnets.clear();
         }
         handlers.clear();
+        sticks.clear();
         shatterDelayedBullets();
     }
 
@@ -157,7 +155,7 @@ public abstract class Barrel {
         }
     }
 
-    protected TailTag pul(int serial, int hp, Magnet magnet, Primer primer) {
+    protected Bullet pull(int serial, int hp, Primer primer, Magnet magnet) {
         if (magnet != null) {
             Set<Magnett> magnets = handlers.get(serial);
             if (magnets == null) {
@@ -168,10 +166,10 @@ public abstract class Barrel {
             }
             magnets.add(new Magnett(magnet, hp, primer));
         }
-        return getSticky(serial);
+        return new Bullet(serial, getSticky(serial));
     }
 
-    protected void releas(int serial, Magnet magnet) {
+    protected void release(int serial, Magnet magnet) {
         if (magnet == null) {
             sticks.remove(serial);
         } else {
@@ -230,12 +228,10 @@ public abstract class Barrel {
         bullets.add(new Bullet(serial, tailTag));
     }
 
-    protected void shootInfinit(int serial, TailTag tailTag) {
+    protected void shootInfinity(int serial, TailTag tailTag) {
         checkNull(tailTag,
-                "A bullet di infinty cannot be shot with a null tailtag.");
-        TailTag tag = sticks.get(serial);
-        if (tag == null)
-            sticks.put(serial, tailTag);
+                "A bullet di infinity cannot be shot with a null tailtag.");
+        sticks.put(serial, tailTag);
         shoot(serial, tailTag, false);
     }
 

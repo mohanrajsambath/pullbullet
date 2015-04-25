@@ -177,7 +177,7 @@ public class MainActivity extends Activity implements Magnet, View.OnClickListen
 
     @Override
     protected void onDestroy() {
-        rifle.releaseAll();
+        rifle.clear();
         super.onDestroy();
     }
 }

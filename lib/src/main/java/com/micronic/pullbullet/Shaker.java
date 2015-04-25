@@ -26,7 +26,7 @@ import java.util.List;
 
 public class Shaker implements SensorEventListener {
     private final Listener listener;
-    private final SampleQueue queue = new SampleQueue();
+    private final Queue queue = new Queue();
     private Sensor accelerometer;
     private int or = 6;
     private int prox = 2;
@@ -89,7 +89,7 @@ public class Shaker implements SensorEventListener {
             queue.add(timestamp, accelerating);
             if (queue.isShaking()) {
                 queue.clear();
-                listener.hearShake();
+                listener.onShake();
             }
             int ori = checkOrientation(event);
             if (or != ori && (ori <= 5 && ori >= 0)) {
@@ -138,7 +138,7 @@ public class Shaker implements SensorEventListener {
     }
 
     public interface Listener {
-        void hearShake();
+        void onShake();
 
         void orChanged(int or);
 
@@ -170,7 +170,7 @@ public class Shaker implements SensorEventListener {
         }
     }
 
-    static class SampleQueue {
+    static class Queue {
         private final SamplePool pool = new SamplePool();
         private int acceleratingCount;
         private Sample newest;

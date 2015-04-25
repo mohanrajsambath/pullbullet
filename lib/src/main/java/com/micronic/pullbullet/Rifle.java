@@ -16,6 +16,7 @@
 
 package com.micronic.pullbullet;
 
+import android.annotation.SuppressLint;
 import android.app.ActivityManager;
 import android.app.ActivityManager.RunningTaskInfo;
 import android.content.BroadcastReceiver;
@@ -37,6 +38,7 @@ import java.util.concurrent.ConcurrentHashMap;
 import java.util.concurrent.ConcurrentLinkedQueue;
 import java.util.concurrent.ConcurrentMap;
 
+@SuppressLint("UseSparseArrays")
 public class Rifle extends Barrel {
     private static Class<?> sClass = RegularService.class;
     private final ActivityManager am;
@@ -73,7 +75,7 @@ public class Rifle extends Barrel {
                     bundle = getResultExtras(false);
                 else
                     bundle = arg1.getExtras();
-                bundle.remove(iSerial);
+                if (bundle != null) bundle.remove(iSerial);
                 TailTag tailTag = decode(bundle);
                 post(serial, tailTag);
                 if (shattered) {
@@ -104,6 +106,7 @@ public class Rifle extends Barrel {
             }
         }
     };
+
     private final Map<Integer, Preamble> ors = new HashMap<Integer, Preamble>();
     private final Map<Integer, TailTag> recs = new HashMap<Integer, TailTag>();
     private final ConcurrentMap<Integer, Intent> sticks = new ConcurrentHashMap<Integer, Intent>();
@@ -233,9 +236,7 @@ public class Rifle extends Barrel {
             if (serial >= 0) {
                 Intent in = context.registerReceiver(null, new IntentFilter(iTag
                         + serial));
-                if (in != null) {
-                    return decode(in.getExtras());
-                }
+                return decode(in.getExtras());
             } else if (serial == -63) {
                 return new TailTag().put("clip", Utils.getClip(cliper));
             } else if (serial == -1) {
@@ -282,27 +283,24 @@ public class Rifle extends Barrel {
         }
     }
 
-    public Bullet pull(int serial, int horsePower, Magnet magnet) {
-        return pull(serial, null, magnet);
-    }
-
-    protected TailTag pull(int serial, int power, Magnet magnet, Primer primer) {
+    @Override
+    public synchronized Bullet pull(int serial, int horsePower, Primer primer, Magnet magnet) {
         if (magnet != null) {
             if (serial < 0)
                 com(new int[]{serial}, new int[]{1}, true);
-            rePull(power);
-            pul(serial, power, magnet, primer);
-            regBroadcast(power);
+            rePull(horsePower);
+            super.pull(serial, horsePower, primer, magnet);
+            regBroadcast(horsePower);
         }
-        return getSticky(serial);
+        return new Bullet(serial, getSticky(serial));
     }
 
-    public synchronized Bullet pull(int serial, int horsePower, Primer primer, Magnet magnet) {
-        return new Bullet(serial, pull(serial, horsePower, magnet, primer));
+    public Bullet pull(int serial, int horsePower, Magnet magnet) {
+        return pull(serial, horsePower, null, magnet);
     }
 
     public Bullet pull(int serial, Magnet magnet) {
-        return pull(serial, 100, magnet);
+        return pull(serial, 100, null, magnet);
     }
 
     public Bullet pull(int serial, Primer primer, Magnet magnet) {
@@ -339,16 +337,18 @@ public class Rifle extends Barrel {
         }
     }
 
+    @Override
     public synchronized void release(int serial, Magnet magnet) {
         if (serial < 0)
             com(new int[]{serial}, new int[]{1}, false);
-        releas(serial, magnet);
+        super.release(serial, magnet);
         Intent in = sticks.remove(serial);
         if (in != null)
             context.removeStickyBroadcast(in);
     }
 
-    public synchronized void releaseAll() {
+    @Override
+    public synchronized void clear() {
         int[] sers = new int[size()];
         int[] hms = new int[size()];
         int i = 0;
@@ -358,7 +358,7 @@ public class Rifle extends Barrel {
             i++;
         }
         com(sers, hms, false);
-        clear();
+        super.clear();
         try {
             if (registered) {
                 context.unregisterReceiver(receiver);
@@ -370,6 +370,7 @@ public class Rifle extends Barrel {
         } catch (Exception e) {
         }
         sticks.clear();
+        count = 0;
     }
 
     public synchronized void releaseAllFor(int serial) {
@@ -389,7 +390,6 @@ public class Rifle extends Barrel {
     private void rePull(int power) {
         if (priority < power)
             if (registered) {
-                Log.e("rifle", "rereg");
                 try {
                     IntentFilter filter = new IntentFilter(iTag);
                     filter.setPriority(power);
@@ -398,7 +398,6 @@ public class Rifle extends Barrel {
                     priority = power;
                 } catch (Exception e) {
                 }
-                Log.e("rifle", "rereg success");
             }
     }
 
@@ -426,10 +425,11 @@ public class Rifle extends Barrel {
         shootDelayed(serial, timeout, tailTag, ls);
     }
 
+    /* @permission android.permission.BROADCAST_STICKY */
     @Override
-    protected void shootInfinit(int serial, TailTag tailTag) {
+    protected void shootInfinity(int serial, TailTag tailTag) {
         checkNull(tailTag,
-                "A bullet di infinty cannot be shot with a null tailTag.");
+                "A bullet di infinity cannot be shot with a null tailTag.");
         count++;
         Bundle bundle = encode(tailTag);
         Intent intent = new Intent(iTag + serial);
@@ -442,12 +442,7 @@ public class Rifle extends Barrel {
     /* @permission android.permission.BROADCAST_STICKY */
     public synchronized void shootInfinity(Bullet bullet) {
         checkNull(bullet, "Bullet to be shot cannot be null");
-        shootInfinit(bullet.getSerial(), bullet.getTailTag());
-    }
-
-    /* @permission android.permission.BROADCAST_STICKY */
-    public void shootInfinity(int serial, TailTag tailTag) {
-        shootInfinit(serial, tailTag);
+        shootInfinity(bullet.getSerial(), bullet.getTailTag());
     }
 
     private class Preamble {

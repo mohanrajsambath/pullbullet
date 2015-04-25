@@ -18,61 +18,65 @@ package com.micronic.pullbullet;
 
 public class Gun {
 
-    private static final Barel barel = new Barel();
+    private static final Pregun pregun = new Pregun();
 
-    public static synchronized Bullet pull(int serial, int horsePower, Magnet magnet) {
-        return new Bullet(serial, barel.pul(serial, horsePower, magnet, null));
+    public static synchronized void clear() {
+        pregun.clear();
     }
 
     public static synchronized Bullet pull(int serial, int horsePower, Primer primer,
                                            Magnet magnet) {
-        return new Bullet(serial, barel.pul(serial, horsePower, magnet, primer));
+        return pregun.pull(serial, horsePower, primer, magnet);
+    }
+
+    public static synchronized Bullet pull(int serial, int horsePower, Magnet magnet) {
+        return pull(serial, horsePower, null, magnet);
     }
 
     public static synchronized Bullet pull(int serial, Magnet magnet) {
-        return new Bullet(serial, barel.pul(serial, 100, magnet, null));
+        return pull(serial, 100, null, magnet);
     }
 
     public static synchronized Bullet pull(int serial, Primer primer, Magnet magnet) {
-        return new Bullet(serial, barel.pul(serial, 100, magnet, primer));
+        return pull(serial, 100, primer, magnet);
     }
 
     public static synchronized void release(int serial, Magnet magnet) {
-        barel.releas(serial, magnet);
+        pregun.release(serial, magnet);
     }
 
     public static synchronized void shoot(Bullet bullet) {
-        barel.checkNull(bullet, "Bullet to be shot cannot be null");
-        barel.shoot(bullet.getSerial(), bullet.getTailTag());
+        pregun.checkNull(bullet, "Bullet to be shot cannot be null");
+        pregun.shoot(bullet.getSerial(), bullet.getTailTag());
     }
 
     public static synchronized void shoot(int serial, TailTag tailTag) {
-        barel.shoot(serial, tailTag);
+        pregun.shoot(serial, tailTag);
     }
 
     public static synchronized void shootDelayed(int serial, TailTag tailTag, long timeout) {
-        barel.shootDelayed(serial, tailTag, timeout);
+        pregun.shootDelayed(serial, tailTag, timeout);
     }
 
     public static synchronized void shootDelayed(Bullet bullet, long timeout) {
-        barel.checkNull(bullet, "Bullet to be shot cannot be null");
+        pregun.checkNull(bullet, "Bullet to be shot cannot be null");
         shootDelayed(bullet.getSerial(), bullet.getTailTag(), timeout);
     }
 
     public static synchronized void shootInfinity(Bullet bullet) {
-        barel.checkNull(bullet, "Bullet to be shot cannot be null");
-        barel.shootInfinit(bullet.getSerial(), bullet.getTailTag());
+        pregun.checkNull(bullet, "Bullet to be shot cannot be null");
+        pregun.shootInfinity(bullet.getSerial(), bullet.getTailTag());
     }
 
     public static synchronized void shootInfinity(int serial, TailTag tailTag) {
-        barel.shootInfinit(serial, tailTag);
+        pregun.shootInfinity(serial, tailTag);
     }
 
     public static synchronized int getFireCount() {
-        return barel.count;
+        return pregun.count;
     }
 
     public static synchronized void shatterDelayedBullets() {
-        barel.shatterDelayedBullets();
+        pregun.shatterDelayedBullets();
     }
 }
