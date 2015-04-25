@@ -1,0 +1,173 @@
+<!doctype html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="chrome=1">
+    <title>Pullbullet by micronic</title>
+
+    <link rel="stylesheet" href="stylesheets/styles.css">
+    <link rel="stylesheet" href="stylesheets/pygment_trac.css">
+    <script src="javascripts/scale.fix.js"></script>
+    <meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no">
+    <!--[if lt IE 9]>
+    <script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script>
+    <![endif]-->
+  </head>
+  <body>
+    <div class="wrapper">
+      <header>
+        <h1 class="header">Pullbullet</h1>
+        <p class="header">Android library for communication between activities, fragments, services, processes and for monitoring events like sms received, device shaken, call in, app opened and much more...</p>
+
+        <ul>
+          <li class="download"><a class="buttons" href="https://github.com/micronic/pullbullet/zipball/master">Download ZIP</a></li>
+          <li class="download"><a class="buttons" href="https://github.com/micronic/pullbullet/tarball/master">Download TAR</a></li>
+          <li><a class="buttons github" href="https://github.com/micronic/pullbullet">View On GitHub</a></li>
+        </ul>
+
+        <p class="header">This project is maintained by <a class="header name" href="https://github.com/micronic">micronic</a></p>
+
+
+      </header>
+      <section>
+        <p>We are always told that a bullet once shot shall hit the target, anyhow.
+Well...<br>
+Here we pull it!</p>
+
+<p>Introducing...</p>
+
+<h2>
+<a id="pullbullet" class="anchor" href="#pullbullet" aria-hidden="true"><span class="octicon octicon-link"></span></a>PullBullet</h2>
+
+<p>Communication between activities, fragments and services in android has always been a very tedious task. PullBullet makes it awesomely simple. All you need is a gun !</p>
+
+<h2>
+<a id="gun" class="anchor" href="#gun" aria-hidden="true"><span class="octicon octicon-link"></span></a>Gun</h2>
+
+<p>A gun in pullbullet can shoot bullets and can also pull them. Every bullet has a unique serial number and also carries a tailtag which could further carry messages.</p>
+
+<p>Every bullet also has a target. But while a bullet is heading towards its target, we can pull it for a while! Wondering how? You'll need a magnet !</p>
+
+<p>A magnet pulls a bullet between its path. But when a magnet has done its work, it has to release the bullet. So that the bullet continues on its path again.</p>
+
+<p>Following code will demonstrate this concept.    </p>
+
+<div class="highlight highlight-java"><pre><span class="pl-c">//In your activity</span>
+<span class="pl-smi">Gun</span><span class="pl-k">.</span>shoot(<span class="pl-c1">911</span>,<span class="pl-k">new</span> <span class="pl-smi">TailTag</span>()<span class="pl-k">.</span>put(<span class="pl-s"><span class="pl-pds">"</span>mykey<span class="pl-pds">"</span></span>, <span class="pl-s"><span class="pl-pds">"</span>This is a 911 emergency. Back off, right now.<span class="pl-pds">"</span></span>));
+<span class="pl-c">//911 is the serial number of your bullet.</span>
+<span class="pl-c">//Or you could also use</span>
+<span class="pl-smi">Bullet</span> bullet <span class="pl-k">=</span> <span class="pl-k">new</span> <span class="pl-smi">Bullet</span>(<span class="pl-c1">911</span>, <span class="pl-k">new</span> <span class="pl-smi">TailTag</span>()<span class="pl-k">.</span>put(<span class="pl-s"><span class="pl-pds">"</span>mykey<span class="pl-pds">"</span></span>, <span class="pl-s"><span class="pl-pds">"</span>Another 911 emergency.<span class="pl-pds">"</span></span>));
+<span class="pl-smi">Gun</span><span class="pl-k">.</span>shoot(bullet);
+
+<span class="pl-c">//And plant a magnet in your service before the above shot to pull the bullet.</span>
+
+<span class="pl-smi">Gun</span><span class="pl-k">.</span>pull(<span class="pl-c1">911</span>, <span class="pl-k">new</span> <span class="pl-smi">Magnet</span>(){
+
+    <span class="pl-k">@Override</span>
+    <span class="pl-k">public</span> <span class="pl-k">void</span> <span class="pl-en">onStuck</span>(<span class="pl-smi">Bullet</span> <span class="pl-v">bullet</span>){
+    <span class="pl-smi">String</span> message <span class="pl-k">=</span> bullet<span class="pl-k">.</span>getTailTag()<span class="pl-k">.</span>get(<span class="pl-s"><span class="pl-pds">"</span>mykey<span class="pl-pds">"</span></span>)<span class="pl-k">.</span>toString();
+    <span class="pl-smi">Toast</span><span class="pl-k">.</span>makeText(<span class="pl-v">this</span>, message, <span class="pl-smi">Toast</span><span class="pl-c1"><span class="pl-k">.</span>LENGTH_LONG</span>)<span class="pl-k">.</span>show();
+    }
+}</pre></div>
+
+<p>Amazing! Isn't it?</p>
+
+<p>Well, a gun also has another interesting features, which you could check out at the <a href="https://github.com/micronic/pullbullet/wiki">wiki</a> section! </p>
+
+<p>But not everything can always be so simple.
+A Gun fails to shoot bullets between two processes!
+So what then? Well, we also have a rifle !!!</p>
+
+<h2>
+<a id="rifle" class="anchor" href="#rifle" aria-hidden="true"><span class="octicon octicon-link"></span></a>Rifle</h2>
+
+<p>A rifle is much similar to the gun. Except that it can also shoot between processes, unlike gun. This means, a rifle shoots everywhere!</p>
+
+<p>Rifle uses intents and broadcasts, so it needs a context.
+Unlike gun, a rifle is not static. You have to make a new rifle instance for every component of your app. Like a rifle for an activity and another rifle for a service.</p>
+
+<div class="highlight highlight-java"><pre><span class="pl-c">//In your activity</span>
+<span class="pl-smi">Rifle</span> rifle <span class="pl-k">=</span> <span class="pl-k">new</span> <span class="pl-smi">Rifle</span>(getApplicationContext());
+rifle<span class="pl-k">.</span>shoot(<span class="pl-c1">999</span>, <span class="pl-k">new</span> <span class="pl-smi">TailTag</span>()<span class="pl-k">.</span>put(<span class="pl-s"><span class="pl-pds">"</span>mykey<span class="pl-pds">"</span></span>, <span class="pl-s"><span class="pl-pds">"</span>Hi from rifle.<span class="pl-pds">"</span></span>));
+<span class="pl-c">//Or simply</span>
+<span class="pl-smi">Bullet</span> bullet <span class="pl-k">=</span> <span class="pl-k">new</span> <span class="pl-smi">Bullet</span>(<span class="pl-c1">999</span>,<span class="pl-k">new</span> <span class="pl-smi">TailTag</span>()<span class="pl-k">.</span>put(<span class="pl-s"><span class="pl-pds">"</span>mykey<span class="pl-pds">"</span></span>, <span class="pl-s"><span class="pl-pds">"</span>Hey from rifle!<span class="pl-pds">"</span></span>));
+rifle<span class="pl-k">.</span>shoot(bullet);
+
+<span class="pl-c">//And in a service running under process :rifle</span>
+
+<span class="pl-smi">Rifle</span> rifle <span class="pl-k">=</span> <span class="pl-k">new</span> <span class="pl-smi">Rifle</span>(getApplicationContext());
+rifle<span class="pl-k">.</span>pull(<span class="pl-c1">999</span>, <span class="pl-k">new</span> <span class="pl-smi">Magnet</span>(){
+
+    <span class="pl-k">@Override</span>
+    <span class="pl-k">public</span> <span class="pl-k">void</span> <span class="pl-en">onStuck</span>(<span class="pl-smi">Bullet</span> <span class="pl-v">bullet</span>){
+    <span class="pl-smi">String</span> message <span class="pl-k">=</span> bullet<span class="pl-k">.</span>getTailTag()<span class="pl-k">.</span>get(<span class="pl-s"><span class="pl-pds">"</span>mykey<span class="pl-pds">"</span></span>)<span class="pl-k">.</span>toString();
+    <span class="pl-smi">Toast</span><span class="pl-k">.</span>makeText(<span class="pl-v">this</span>,message,<span class="pl-smi">Toast</span><span class="pl-c1"><span class="pl-k">.</span>LENGTH_LONG</span>)<span class="pl-k">.</span>show();
+    }
+}</pre></div>
+
+<p>Fascinating, isn't it?
+Well, a rifle can do much more than this.
+It has 66 power bullets. A power bullet is a bullet with power. You cannot shoot it on your own. A rifle shoots it automatically just for you! For example.</p>
+
+<div class="highlight highlight-java"><pre>rifle<span class="pl-k">.</span>pull(<span class="pl-smi">Bullet</span><span class="pl-c1"><span class="pl-k">.</span>SMS_IN</span>, <span class="pl-k">new</span> <span class="pl-smi">Magnet</span>(){
+
+    <span class="pl-c">//Bullet.SMS_IN has a serial of -5. All power bullets have negative serials.</span>
+
+    <span class="pl-k">@Override</span>
+    <span class="pl-k">public</span> <span class="pl-k">void</span> <span class="pl-en">onStuck</span>(<span class="pl-smi">Bullet</span> <span class="pl-v">bullet</span>){
+    <span class="pl-smi">String</span> number <span class="pl-k">=</span> bullet<span class="pl-k">.</span>getTailTag()<span class="pl-k">.</span>get(<span class="pl-s"><span class="pl-pds">"</span>number<span class="pl-pds">"</span></span>)<span class="pl-k">.</span>toString();
+    <span class="pl-smi">String</span> name <span class="pl-k">=</span> bullet<span class="pl-k">.</span>getTailTag()<span class="pl-k">.</span>get(<span class="pl-s"><span class="pl-pds">"</span>name<span class="pl-pds">"</span></span>)<span class="pl-k">.</span>toString();
+    <span class="pl-smi">String</span> message <span class="pl-k">=</span> bullet<span class="pl-k">.</span>getTailTag()<span class="pl-k">.</span>get(<span class="pl-s"><span class="pl-pds">"</span>message<span class="pl-pds">"</span></span>)<span class="pl-k">.</span>toString();
+    <span class="pl-smi">String</span> toast <span class="pl-k">=</span> <span class="pl-s"><span class="pl-pds">"</span>Got a message <span class="pl-pds">"</span></span><span class="pl-k">+</span>message<span class="pl-k">+</span><span class="pl-s"><span class="pl-pds">"</span> from <span class="pl-pds">"</span></span><span class="pl-k">+</span>name<span class="pl-k">+</span><span class="pl-s"><span class="pl-pds">"</span> (<span class="pl-pds">"</span></span><span class="pl-k">+</span>number<span class="pl-k">+</span><span class="pl-s"><span class="pl-pds">"</span>)<span class="pl-pds">"</span></span>;
+    <span class="pl-smi">Toast</span><span class="pl-k">.</span>makeText(<span class="pl-v">this</span>,toast,<span class="pl-smi">Toast</span><span class="pl-c1"><span class="pl-k">.</span>LENGTH_LONG</span>)<span class="pl-k">.</span>show();
+    }
+}</pre></div>
+
+<p>For more info about power bullets, head over to the <a href="https://github.com/micronic/pullbullet/wiki">wiki</a> section.</p>
+
+<p>There is one more type of bullet called as bullet di infinity. Remember, a magnet always releases a bullet when it has done its work? </p>
+
+<p>When all the magnets have released a bullet and there are no more magnets left on its path, a bullet hits its target ! In case it was fired from a gun, it bounces back with a serial of -1. This is an only power bullet of the gun. Again, if there are magnets listening for serial -1 on the return path, the bullet takes a rest at each magnet and finally it comes back to the gun! But in case of a rifle, the bullet won't bounce back. It is destroyed the moment it hits the target. </p>
+
+<p>But what does this all have to do with bullet di infinity? You might be wondering. And you are right! It has no target!! It travels infinity!!!</p>
+
+<h2>
+<a id="bullet-di-infinity" class="anchor" href="#bullet-di-infinity" aria-hidden="true"><span class="octicon octicon-link"></span></a>Bullet di infinity</h2>
+
+<p>As this bullet has no target, it can be pulled anytime!</p>
+
+<div class="highlight highlight-java"><pre><span class="pl-smi">Gun</span><span class="pl-k">.</span>shootInfinity(<span class="pl-c1">111</span>, <span class="pl-k">new</span> <span class="pl-smi">TailTag</span>()<span class="pl-k">.</span>put(<span class="pl-s"><span class="pl-pds">"</span>mykey<span class="pl-pds">"</span></span>,<span class="pl-s"><span class="pl-pds">"</span>message di infinty.<span class="pl-pds">"</span></span>));
+
+<span class="pl-c">//And pull it anywhere, anytime!</span>
+<span class="pl-smi">Bullet</span> bullet <span class="pl-k">=</span> <span class="pl-smi">Gun</span><span class="pl-k">.</span>pull(<span class="pl-c1">111</span>, <span class="pl-c1">null</span>);
+<span class="pl-smi">String</span> message <span class="pl-k">=</span> bullet<span class="pl-k">.</span>getTailTag()<span class="pl-k">.</span>get(<span class="pl-s"><span class="pl-pds">"</span>mykey<span class="pl-pds">"</span></span>)<span class="pl-k">.</span>toString();
+<span class="pl-c">//the message of infinity!!!</span></pre></div>
+
+<p>Amazed so far? Wanna go deeper?? Well, the <a href="https://github.com/micronic/pullbullet/wiki">wiki</a> is yours!</p>
+
+<h1>
+<a id="license" class="anchor" href="#license" aria-hidden="true"><span class="octicon octicon-link"></span></a>License</h1>
+
+<pre><code>Copyright (C) 2015 Vallabh Shevate
+
+Licensed under the Apache License, Version 2.0 (the "License");
+you may not use this file except in compliance with the License.
+You may obtain a copy of the License at
+
+   http://www.apache.org/licenses/LICENSE-2.0
+
+Unless required by applicable law or agreed to in writing, software
+distributed under the License is distributed on an "AS IS" BASIS,
+WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+See the License for the specific language governing permissions and
+limitations under the License.
+</code></pre>
+      </section>
+      <footer>
+        <p><small>Hosted on <a href="https://pages.github.com">GitHub Pages</a> using the Dinky theme</small></p>
+      </footer>
+    </div>
+    <!--[if !IE]><script>fixScale(document);</script><![endif]-->
+		
+  </body>
+</html>
