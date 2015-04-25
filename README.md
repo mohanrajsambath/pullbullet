@@ -39,7 +39,7 @@ Gun.pull(911, new Magnet(){
 ```
 Amazing! Isn't it?
 
-Well, a gun also has another interesting features, which you could check out at the wiki section! 
+Well, a gun also has another interesting features, which you could check out at the [wiki][1] section! 
 
 But not everything can always be so simple.
 A Gun fails to shoot bullets between two processes!
@@ -90,7 +90,7 @@ rifle.pull(Bullet.SMS_IN, new Magnet(){
     }
 }
 ```
-For more info about power bullets, head over to the wiki section.
+For more info about power bullets, head over to the [wiki][1] section.
 
 There is one more type of bullet called as bullet di infinity. Remember, a magnet always releases a bullet when it has done its work? 
 
@@ -110,7 +110,7 @@ Bullet bullet = Gun.pull(111, null);
 String message = bullet.getTailTag().get("mykey").toString();
 //the message of infinity!!!
 ```
-Amazed so far? Wanna go deeper?? Well, the wiki is yours!
+Amazed so far? Wanna go deeper?? Well, the [wiki][1] is yours!
 
 License
 =======
@@ -128,3 +128,4 @@ License
     WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
     See the License for the specific language governing permissions and
     limitations under the License.
+[1]: https://github.com/micronic/pullbullet/wiki
