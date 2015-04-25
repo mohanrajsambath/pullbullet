@@ -1,5 +1,6 @@
 We are always told that a bullet once shot shall hit the target, anyhow.
-Well, here we pull it !
+Well...<br/>
+Here we pull it!
 
 Introducing...
 PullBullet
@@ -25,7 +26,7 @@ Gun.shoot(911,new TailTag().put("mykey", "This is a 911 emergency. Back off, rig
 Bullet bullet = new Bullet(911, new TailTag().put("mykey", "Another 911 emergency."));
 Gun.shoot(bullet);
 
-//And now in your service
+//And plant a magnet in your service before the above shot to pull the bullet.
 
 Gun.pull(911, new Magnet(){
 
