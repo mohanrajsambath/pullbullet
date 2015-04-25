@@ -1,5 +1,6 @@
 We are always told that a bullet once shot shall hit the target, anyhow.
-Well, here we pull it !
+Well...<br/>
+Here we pull it!
 
 Introducing...
 PullBullet
@@ -25,7 +26,7 @@ Gun.shoot(911,new TailTag().put("mykey", "This is a 911 emergency. Back off, rig
 Bullet bullet = new Bullet(911, new TailTag().put("mykey", "Another 911 emergency."));
 Gun.shoot(bullet);
 
-//And now in your service
+//And plant a magnet in your service before the above shot to pull the bullet.
 
 Gun.pull(911, new Magnet(){
 
@@ -95,7 +96,7 @@ There is one more type of bullet called as bullet di infinity. Remember, a magne
 
 When all the magnets have released a bullet and there are no more magnets left on its path, a bullet hits its target ! In case it was fired from a gun, it bounces back with a serial of -1. This is an only power bullet of the gun. Again, if there are magnets listening for serial -1 on the return path, the bullet takes a rest at each magnet and finally it comes back to the gun! But in case of a rifle, the bullet won't bounce back. It is destroyed the moment it hits the target. 
 
-But what does this all have to do with bullet di infinity? You might be wondering. Well, it has no target!! It travels infinity!!!
+But what does this all have to do with bullet di infinity? You might be wondering. And you are right! It has no target!! It travels infinity!!!
 
 Bullet di infinity
 -----------------    
@@ -107,7 +108,7 @@ Gun.shootInfinity(111, new TailTag().put("mykey","message di infinty."));
 //And pull it anywhere, anytime!
 Bullet bullet = Gun.pull(111, null);
 String message = bullet.getTailTag().get("mykey").toString();
-//the message is of infinty!!!
+//the message of infinity!!!
 ```
 Amazed so far? Wanna go deeper?? Well, the wiki is yours!
 
