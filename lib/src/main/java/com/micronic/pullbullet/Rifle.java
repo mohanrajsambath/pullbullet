@@ -427,7 +427,7 @@ public class Rifle extends Barrel {
 
     /* @permission android.permission.BROADCAST_STICKY */
     @Override
-    protected void shootInfinity(int serial, TailTag tailTag) {
+    public synchronized void shootInfinity(int serial, TailTag tailTag) {
         checkNull(tailTag,
                 "A bullet di infinity cannot be shot with a null tailTag.");
         count++;
@@ -440,7 +440,7 @@ public class Rifle extends Barrel {
     }
 
     /* @permission android.permission.BROADCAST_STICKY */
-    public synchronized void shootInfinity(Bullet bullet) {
+    public void shootInfinity(Bullet bullet) {
         checkNull(bullet, "Bullet to be shot cannot be null");
         shootInfinity(bullet.getSerial(), bullet.getTailTag());
     }

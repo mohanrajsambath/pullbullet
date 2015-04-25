@@ -23,30 +23,33 @@ public class Bullet {
     public final static int BATTERY_LOW = -2;
     public final static int BATTERY_OKAY = -3;
     public final static int BATTERY_FULL = -4;
-    /** @permission android.permission.RECEIVE_SMS */
     /**
+     * @permission android.permission.RECEIVE_SMS
      * @permission android.permission.READ_CONTACTS to get name
      */
     public final static int SMS_IN = -5;
     public final static int CONNECTIVITY = -6;
     /**
      * @permission android.permission.READ_CONTACTS to get name
+     * @permission android.permission.READ_PHONE_STATE
      */
     public final static int CALL_IN = -7;
     /**
      * @permission android.permission.READ_CONTACTS to get name
+     * @permission android.permission.READ_PHONE_STATE
      */
     public final static int CALL_MISSED = -8;
     /**
      * @permission android.permission.READ_CONTACTS to get name
+     * @permission android.permission.READ_PHONE_STATE
      */
     public final static int CALL_ENDED = -9;
     /**
      * @permission android.permission.READ_CONTACTS to get name
+     * @permission android.permission.READ_PHONE_STATE
      */
     public final static int CALL_ANSWERED = -10;
-    /** @permission android.permission.PROCESS_OUTGOING_CALLS */
-    /**
+    /** @permission android.permission.PROCESS_OUTGOING_CALLS
      * @permission android.permission.READ_CONTACTS to get name
      */
     public final static int CALL_OUT = -11;
@@ -98,8 +101,7 @@ public class Bullet {
     public final static int TIME_CHANGED = -48;
     public final static int TIME_TICK = -49;
     public final static int SCREEN_UNLOCKED = -50;
-    /** @permission android.permission.RECEIVE_BOOT_COMPLETED */
-    /**
+    /** @permission android.permission.RECEIVE_BOOT_COMPLETED
      * @RegularReceiver
      */
     public final static int BOOT_COMPLETED = -51;
@@ -128,6 +130,7 @@ public class Bullet {
      * @API 14
      * @AccessService
      * @permission android.permission.BIND_ACCESSIBILITY_SERVICE
+     * @permission android.permission.GET_TOP_ACTIVITY_INFO
      */
     public final static int APP_OPENED = -64;
     /**
@@ -136,8 +139,7 @@ public class Bullet {
      * @permission android.permission.BIND_ACCESSIBILITY_SERVICE
      */
     public final static int NOTIFICATION_RECEIVED = -65;
-    /** @permission android.permission.ACCESS_COARSE_LOCATION */
-    /**
+    /** @permission android.permission.ACCESS_COARSE_LOCATION
      * @permission android.permission.ACCESS_FINE_LOCATION
      */
     public final static int OBTAIN_LOCATION = -66;

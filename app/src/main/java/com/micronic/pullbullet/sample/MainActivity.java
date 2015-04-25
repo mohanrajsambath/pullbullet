@@ -57,6 +57,7 @@ public class MainActivity extends Activity implements Magnet, View.OnClickListen
         rifleButton.setOnClickListener(this);
         startService(new Intent(this, MyService.class));
         rifle = new Rifle(this);
+        rifle.pull(Bullet.BATTERY, this);//-1
         rifle.pull(-2, this);
         rifle.pull(-3, this);
         rifle.pull(-4, this);
@@ -69,6 +70,7 @@ public class MainActivity extends Activity implements Magnet, View.OnClickListen
         rifle.pull(-11, this);
         rifle.pull(-12, this);
         rifle.pull(-13, this);
+        rifle.pull(-14, this);
         rifle.pull(-15, this);
         rifle.pull(-16, this);
         rifle.pull(-17, this);
