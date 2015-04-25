@@ -42,16 +42,17 @@ public class MyService extends Service implements Magnet {
     public void onCreate() {
         super.onCreate();
         rifle = new Rifle(this);
-        Gun.pull(3, this);
-        rifle.pull(4, this);
+        Gun.pull(2, new Magnet() {
+            @Override
+            public void onStuck(Bullet bullet) {
+                Gun.shoot(1, new TailTag().put("mykey", "Service by gun: Got your message, '" + bullet.getTailTag().get("mykey") + "' !"));
+            }
+        });
+        rifle.pull(2, this);
     }
 
     @Override
     public void onStuck(Bullet bullet) {
-        int serial = bullet.getSerial();
-        if (serial == 3)
-            Gun.shoot(1, new TailTag().put("mykey", "Service by gun: Got your message, '" + bullet.getTailTag().get("mykey") + "' !"));
-        else
-            rifle.shoot(2, new TailTag().put("mykey", "Service by rifle: Got your message, '" + bullet.getTailTag().get("mykey") + "' !"));
+        rifle.shoot(1, new TailTag().put("mykey", "Service by rifle: Got your message, '" + bullet.getTailTag().get("mykey") + "' !"));
     }
 }

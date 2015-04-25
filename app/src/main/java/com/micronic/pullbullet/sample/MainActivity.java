@@ -120,13 +120,13 @@ public class MainActivity extends Activity implements Magnet, View.OnClickListen
         rifle.pull(-61, this);
         rifle.pull(-62, this);
         rifle.pull(-63, this);
-        Primer p = new Primer();
-        p.add(new Check("name", "settings", Check.EQUALS_IGNORE_CASE));
-        rifle.pull(-64, p, this);
+        Primer primer = new Primer();
+        primer.add(new Check("name", "settings", Check.EQUALS_IGNORE_CASE));
+        rifle.pull(-64, primer, this);
         rifle.pull(-65, this);
         rifle.pull(-66, this);
         Gun.pull(1, this);
-        rifle.pull(2, this);
+        rifle.pull(1, this);//rifle and gun are independant of each other.
     }
 
     private void append(String text) {
@@ -149,10 +149,7 @@ public class MainActivity extends Activity implements Magnet, View.OnClickListen
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         int id = item.getItemId();
-        if (id == R.id.action_settings) {
-            return true;
-        }
-        return super.onOptionsItemSelected(item);
+        return id == R.id.action_settings || super.onOptionsItemSelected(item);
     }
 
     @Override
@@ -169,14 +166,15 @@ public class MainActivity extends Activity implements Magnet, View.OnClickListen
     @Override
     public void onClick(View view) {
         if (view.getId() == R.id.buttonGun) {
-            Gun.shoot(3, new TailTag().put("mykey", "Hi from activity by gun!"));
+            Gun.shoot(2, new TailTag().put("mykey", "Hi from activity by gun!"));
         } else {
-            rifle.shoot(4, new TailTag().put("mykey", "Hi from activity by rifle!"));
+            rifle.shoot(2, new TailTag().put("mykey", "Hi from activity by rifle!"));
         }
     }
 
     @Override
     protected void onDestroy() {
+        //Always call this method to free resources and memory.
         rifle.clear();
         super.onDestroy();
     }
