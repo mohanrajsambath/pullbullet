@@ -294,8 +294,8 @@ public class RegularService extends Service {
             if (handle != null) {
                 handle.reg(serial, new IntentFilter(), getApplicationContext(), receiver, actions,
                         registry, "n");
-            } else
-                Log.e("rifle", "no handle");
+            }
+
         }
     }
 

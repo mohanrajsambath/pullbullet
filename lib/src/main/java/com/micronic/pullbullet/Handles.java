@@ -126,7 +126,7 @@ public class Handles {
 
             @Override
             public String unregd(int ser, TailTag reg) {
-                if (-ser >= 6 && -ser <= 9) {
+                if (-ser >= 7 && -ser <= 10) {
                     int sevn = reg.get("cnt-7").toInteger();
                     int eigt = reg.get("cnt-8").toInteger();
                     int nin = reg.get("cnt-9").toInteger();

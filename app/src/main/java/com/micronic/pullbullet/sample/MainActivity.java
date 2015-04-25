@@ -43,8 +43,6 @@ public class MainActivity extends Activity implements Magnet, View.OnClickListen
     private Rifle rifle;
     private ScrollView sc;
     private Vibrator vb;
-    private Button gunButton;
-    private Button rifleButton;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -53,8 +51,8 @@ public class MainActivity extends Activity implements Magnet, View.OnClickListen
         mTextView = (TextView) findViewById(R.id.textView1);
         sc = (ScrollView) findViewById(R.id.scroller);
         vb = (Vibrator) getSystemService(Context.VIBRATOR_SERVICE);
-        gunButton = (Button) findViewById(R.id.buttonGun);
-        rifleButton = (Button) findViewById(R.id.buttonRifle);
+        Button gunButton = (Button) findViewById(R.id.buttonGun);
+        Button rifleButton = (Button) findViewById(R.id.buttonRifle);
         gunButton.setOnClickListener(this);
         rifleButton.setOnClickListener(this);
         startService(new Intent(this, MyService.class));
