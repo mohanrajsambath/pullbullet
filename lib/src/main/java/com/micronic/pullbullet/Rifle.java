@@ -114,8 +114,7 @@ public class Rifle extends Barrel {
     private volatile boolean registered = false;
 
     public Rifle(Context context) {
-        if (context == null)
-            throw new NullPointerException("Context must not be null.");
+        checkNull(context, "Context must not be null.");
         this.context = context.getApplicationContext();
         cliper = (ClipboardManager) context
                 .getSystemService(Context.CLIPBOARD_SERVICE);
