@@ -111,7 +111,11 @@ Bullet bullet = Gun.pull(111, null);
 String message = bullet.getTailTag().get("mykey").toString();
 //the message of infinity!!!
 ```
-Amazed so far? Wanna go deeper?? Well, the [wiki][1] is yours!
+What to choose? Gun or Rifle?
+----
+It is noticed that (from the 1000 bullets I have shot) Gun shoots a bit faster than a rifle. Also Gun is more secure than a rifle. So if you have only one process and just communication is all you need, Gun is always preferred over a rifle. But, if you want power, well then a rifle has no choice.
+
+For a detailed documentation of `PullBullet` refer [wiki][1].
 Download
 ---
 A jar file is attached with every release of `PullBullet`.
