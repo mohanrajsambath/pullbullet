@@ -111,6 +111,9 @@ String message = bullet.getTailTag().get("mykey").toString();
 //the message of infinity!!!
 ```
 Amazed so far? Wanna go deeper?? Well, the [wiki][1] is yours!
+Download
+---
+A jar file is attached with every release of `PullBullet`.
 
 License
 =======
