@@ -41,7 +41,8 @@ Amazing! Isn't it?
 
 Well, a gun also has another interesting features, which you could check out at the [wiki][1] section! 
 
-But not everything can always be so simple.
+Gun shoots and pulls everywhere within your app. No matter whether it's an activity, fragment, thread or a service, the gun will have it's shot. But...
+
 A Gun fails to shoot bullets between two processes!
 So what then? Well, we also have a rifle !!!
 Rifle
